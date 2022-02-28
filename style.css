@@ -22,9 +22,13 @@ body{
     background-color: white;
     height: 150px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
+    align-items: center;
     width: 95%;
+    font-size: 36px;
+    padding-right: 12px;
 }
+
 
 #calcContent{
     display:flex;
@@ -58,6 +62,11 @@ body{
     margin: 8px 5px;
     vertical-align: center;
     background-color: rgb(187, 146, 146);
+    transition: all .07s ease;
+}
+
+.calcNo:hover{
+    border-color: yellow;
 }
 
 .calcButton{
@@ -72,6 +81,11 @@ body{
     margin: 7px;
     vertical-align: center;
     background-color: rgb(64, 170, 32);
+    transition: all .07s ease;
+}
+
+.calcButton:hover{
+    border-color: yellow;
 }
 
 #equals{
@@ -79,4 +93,8 @@ body{
     width: 72px;
     margin-left: 6px;
     border-radius: 36px;
+}
+
+.clicked{
+    transform: scale(1.2);
 }
