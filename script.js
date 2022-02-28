@@ -44,7 +44,7 @@ function getOperation(e){
 
         // console.log(currentOperands)
 
-        if(currentOperands.length >= 2){
+        if(currentOperands.length == 2){
             display.textContent += op.innerHTML;
             operate(currentOperands[0], currentOperands[1], currentOperation);
             
