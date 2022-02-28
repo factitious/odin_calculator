@@ -1,31 +1,25 @@
 function operate(a, b, op){
-    if(op === "add"){return a+b};
-    if(op === "subtract"){return a-b}
-    if(op === "multiply"){return a*b}
-    if(op === "divide"){
-        return a/b === Infinity ? "Get outta here!":a/b}
+    if(op === "add"){res =  a+b};
+    if(op === "subtract"){res = a-b}
+    if(op === "multiply"){res =  a*b}
+    if(op === "divide"){res = a/b === Infinity ? "Get outta here!":a/b}
+
+    currentResult = res;
+    display.textContent = currentResult;
 }
 
 
 function clear(){
     display.textContent = "";
+    currentNumber = "";
     currentOperands = [];
     currentOperation = "none";
 }
 
 function getNumber(e){
     this.classList.add('clicked');
-    n = Number(this.innerHTML);
-
-    if(currentOperands.length == 1 && currentOperation === "none"){
-        return
-    }
-
-    if(currentOperands.length == 2){
-        return
-    }
-    
-    currentOperands.push(n);
+    n = this.innerHTML;
+    currentNumber += n;
     display.textContent += n;
 }
 
@@ -33,31 +27,40 @@ function getNumber(e){
 function getOperation(e){
     op = this;
     op.classList.add('clicked');
+
     if(op.id === "clear"){
         clear();
         return
-    } else if(op.id === "equals"){
+    }
+
+    if(op.id != "equals"){
+        display.textContent += op.innerHTML;
+        currentOperation = op.id;
+        console.log(currentOperands.length)
+        
+        // currentOperands[0] = Number(currentNumber);
+        currentOperands.push(Number(currentNumber));
+        currentNumber = "";
+
+        // console.log(currentOperands)
+
+        if(currentOperands.length >= 2){
+            display.textContent += op.innerHTML;
+            operate(currentOperands[0], currentOperands[1], currentOperation);
+            
+        } 
+    }
+
+    if(op.id === "equals"){
+        currentOperands[1] = Number(currentNumber); 
         if(currentOperands.length === 2 && currentOperation != "none"){
-            res = operate(currentOperands[0], currentOperands[1], currentOperation);
-            currentResult = res;
-            display.textContent = currentResult;
-            currentOperands = [currentResult];
+            operate(currentOperands[0], currentOperands[1], currentOperation);
+            currentOperation = "none";
         } else {
             clear();
             display.textContent = "You missed something";
         }
-    } else{
-        if(currentOperands.length == 2){
-            res = operate(currentOperands[0], currentOperands[1], currentOperation);
-            currentResult = res;
-            display.textContent = currentResult;
-            currentOperands = [currentResult];
-            
-        } 
-        
-        display.textContent += op.innerHTML;
-        currentOperation = op.id;
-    }
+    } 
 }
 
 function removeTransition(e){
@@ -70,6 +73,7 @@ const display = document.querySelector("#calcScreen p")
 const buttons = document.querySelectorAll(".calcButton")
 const numbers = document.querySelectorAll(".calcNo")
 const equal = document.querySelector("equals")
+let currentNumber = "";
 let currentOperands = [];
 let currentOperation = "none";
 let currentResult = "";
